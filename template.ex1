@@ -1,0 +1,31 @@
+genes: 5
+
+gene 0
+min: 0
+max: 400
+values: 1024
+format: %7.2f
+
+gene 1
+min: 600
+max: 1000
+values: 1024
+format: %7.2f
+
+gene 2
+min: 600
+max: 1000
+values: 1024
+format: %7.2f
+
+gene 3
+min: 1000
+max: 1400
+values: 1024
+format: %7.2f
+
+gene 4
+min: 2400
+max: 2600
+values: 1024
+format: %7.2f

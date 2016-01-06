@@ -1,0 +1,151 @@
+/************************************************  file f1.c  ****/
+
+#include <stdlib.h>  /* needed for system */
+#include <string.h>  /* needed for strcpy */
+#include <stdio.h>
+#include "extern.h"
+
+/* function prototypes */
+double eval(char *str, int length, double *vect, int genes);
+void printTypes(int p, int k, int b, int r, int q);
+
+double eval(char *str, int length, double *vect, int genes)
+{
+  double sum; /*this will be the calculated fitness*/
+  char command[200]; /*this buffer is used to send commands to the system*/
+
+  /*get the piece values from vect and convert them to ints*/
+  int p = (int)vect[0];
+  int k = (int)vect[1];
+  int b = (int)vect[2];
+  int r = (int)(vect[3]);
+  int q = (int)(vect[4]);
+
+
+  /*set the environmental variables*/
+  char buf[50];
+  sprintf(buf, "%d", p);
+    setenv("PawnValueMg", buf, 1);
+    sprintf(buf, "%d", k);
+    setenv("KnightValueMg", buf, 1);
+    sprintf(buf, "%d", b);
+    setenv("BishopValueMg", buf, 1);
+    sprintf(buf, "%d", r);
+    setenv("RookValueMg", buf, 1);
+    sprintf(buf, "%d", q);
+    setenv("QueenValueMg", buf, 1);
+
+    printf("%d\t%d\t%d\t%d\t%d\t", p, k, b, r, q); /*print the genes*/
+    printf("%d\t%d\t", Gen, Trials); /*print the Generation number and Trial number*/
+  fflush(stdout);
+
+  sum = 0.0; /*set the fitness to 0*/
+    
+  int i;
+  for(i = 0; i < 2; i++){
+    /*Call cutechess skill level = 19/20.  this happens twice (once per loop)*/
+     strcpy(command, "./cutechess-cli/cutechess-cli -engine cmd=stockfish19 -engine cmd=sloppy -each proto=uci tc=40/1 -rounds 1 >> allout.txt");
+    system(command);
+
+    FILE * input;
+    input = fopen("allout.txt", "r"); /*the file used to communicate with Cutechess*/
+    char word[200];
+    if(input != NULL){
+      while(strcmp(word, "64:") != 0 ){ /*scan for the word right before the score*/
+	fscanf(input, "%s", word);
+      }
+      int score;
+      fscanf(input, "%d", &score); /*gets the number of times Stockfish19 won*/
+      sum += score*2; /*wins are multiplied by 2*/
+      fscanf(input, "%s", word); /*gets the hyphen (not used)*/
+      fscanf(input, "%s", word); /*gets number of losses for Stockfish19*/
+      fscanf(input, "%s", word); /*get number of draws (count for 1)*/
+      fscanf(input, "%d", &score);
+      sum += score;
+    }
+    else{
+      printf("cannot open file\n");
+    }
+    fclose(input);
+    system("rm allout.txt"); /*delete allout.txt so it can be used again*/
+
+    /*call Cutechess to simulate a game between the evolved engine and Stockfish 20. This happens 6 times (3 times per loop)*/
+ strcpy(command, "./cutechess-cli/cutechess-cli -engine cmd=stockfish20 -engine cmd=sloppy -each proto=uci tc=40/1 -rounds 1 >> allout.txt");
+    system(command);
+
+    input = fopen("allout.txt", "r");
+    if(input != NULL){
+      while(strcmp(word, "64:") != 0 ){
+	fscanf(input, "%s", word);
+      }
+      int score;
+      fscanf(input, "%d", &score);
+      sum += score*2;
+      fscanf(input, "%s", word);
+      fscanf(input, "%s", word);
+      fscanf(input, "%s", word);
+      fscanf(input, "%d", &score);
+      sum += score;
+    }
+    else{
+      printf("cannot open file\n");
+    }
+    close(input);
+    system("rm allout.txt");
+
+    strcpy(command, "./cutechess-cli/cutechess-cli -engine cmd=stockfish20 -engine cmd=sloppy -each proto=uci tc=40/1 -rounds 1 >> allout.txt");
+    system(command);
+
+    input = fopen("allout.txt", "r");
+    if(input != NULL){
+      while(strcmp(word, "64:") != 0 ){
+	fscanf(input, "%s", word);
+      }
+      int score;
+      fscanf(input, "%d", &score);
+      sum += score*2;
+      fscanf(input, "%s", word);
+      fscanf(input, "%s", word);
+      fscanf(input, "%s", word);
+      fscanf(input, "%d", &score);
+      sum += score;
+    }
+    else{
+      printf("cannot open file\n");
+    }
+    fclose(input);
+    system("rm allout.txt");
+
+    /*call cutechess to play a match against Stockfish skill level = 20/20*/
+    strcpy(command, "./cutechess-cli/cutechess-cli -engine cmd=stockfish20 -engine cmd=sloppy -each proto=uci tc=40/1 -rounds 1 >> allout.txt");
+    system(command);
+
+    input = fopen("allout.txt", "r");
+    if(input != NULL){
+      while(strcmp(word, "64:") != 0 ){
+	fscanf(input, "%s", word);
+      }
+      int score;
+      fscanf(input, "%d", &score);
+      sum += score*2;
+      fscanf(input, "%s", word);
+      fscanf(input, "%s", word);
+      fscanf(input, "%s", word);
+      fscanf(input, "%d", &score);
+      sum += score;
+    }
+    else{
+      printf("cannot open file\n");
+    }
+    fclose(input);
+    system("rm allout.txt");
+  }
+  sum = 16-sum;
+    printf("%f\n", sum);
+    fflush(stdout);
+
+  return (sum);
+}
+
+
+/************************************************ end of file ****/

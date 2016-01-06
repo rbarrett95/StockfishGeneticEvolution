@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+table.head, table.foot { width: 100%; }
+td.head-rtitle, td.foot-os { text-align: right; }
+td.head-vol { text-align: center; }
+table.foot td { width: 50%; }
+table.head td { width: 33%; }
+div.spacer { margin: 1em 0; }
+</style>
+<link rel="stylesheet" href="man-style.css" type="text/css" media="all"/>
+<title>
+ENGINES.JSON(5)</title>
+</head>
+<body>
+<div class="mandoc">
+<table class="head">
+<tbody>
+<tr>
+<td class="head-ltitle">
+ENGINES.JSON(5)</td>
+<td class="head-vol">
+File Formats Manual</td>
+<td class="head-rtitle">
+ENGINES.JSON(5)</td>
+</tr>
+</tbody>
+</table>
+<div class="section">
+<h1 id="x4e414d45">NAME</h1> <b class="name">engines.json</b> &#8212; <span class="desc">Cute Chess engine configuration file</span></div>
+<div class="section">
+<h1 id="x4445534352495054494f4e">DESCRIPTION</h1> <b class="name">engines.json</b> is the chess engine configuration file for <a class="link-man">cutechess-cli(6)</a>. An engine configuration defines name, command, working directory and many other options. These options can be then used in <a class="link-man">cutechess-cli(6)</a> with the <b class="flag">conf</b> command-line option.<div class="spacer">
+</div>
+Engine configurations are defined in JavaScript Object Notation (JSON) format. See <i class="link-sec"><a class="link-sec" href="#x4a534f4e20464f524d4154">JSON FORMAT</a></i>.</div>
+<div class="section">
+<h1 id="x4a534f4e20464f524d4154">JSON FORMAT</h1> JavaScript Object Notation (JSON) is a text-based format for structured data. JSON is a subset of ECMAScript (JavaScript).<div class="subsection">
+<h2 id="x56616c756573">Values</h2> A JSON value must be one of: <i class="arg">object</i>, <i class="arg">array</i>, <i class="arg">number</i>, <i class="arg">string</i>, <b class="flag">false</b>, <b class="flag">true</b> or <b class="flag">null</b>.</div>
+<div class="subsection">
+<h2 id="x4f626a65637473">Objects</h2> A <i class="arg">object</i> is structure of name-value pairs enclosed in curly brackets. A name is a <i class="arg">string</i>. Name and value are separated by a single colon. Pairs are separated by commas.<div class="spacer">
+</div>
+Example objects would be:<div class="spacer">
+</div>
+<pre style="margin-left: 5.00ex;" class="lit display">
+{ &quot;Finland&quot; : &quot;.fi&quot;, &quot;Sweden&quot; : &quot;.se&quot; } 
+ 
+{ 
+  &quot;firstName&quot; : &quot;JC&quot;, 
+  &quot;lastName&quot;  : &quot;Denton&quot;, 
+  &quot;age&quot;       : 28, 
+  &quot;languages&quot; : [ &quot;English&quot;, &quot;French&quot;, &quot;Spanish&quot; ] 
+}</pre>
+</div>
+<div class="subsection">
+<h2 id="x417272617973">Arrays</h2> An <i class="arg">array</i> is a structure of zero or more values enclosed in square brackets. Values are separated by commas.<div class="spacer">
+</div>
+Example arrays would be:<div class="spacer">
+</div>
+<pre style="margin-left: 5.00ex;" class="lit display">
+[ &quot;Cute&quot;, &quot;Chess&quot; ] 
+ 
+[ 
+  [ 1, 0, 0 ], 
+  [ 0, 1, 0 ], 
+  [ 0, 0, 1 ] 
+]</pre>
+</div>
+<div class="subsection">
+<h2 id="x4e756d62657273">Numbers</h2> A <i class="arg">number</i> consists of an integer part and optional fractional and/or exponent part. The integer part can be prefixed with a minus sign. Fractional part is a decimal point followed by one or more digits. Exponent part begins with a letter E in upper or lowercase which may be followed by a plus or minus sign. The E and optional sign are followed by one or more digits.<div class="spacer">
+</div>
+Octal and hex forms are not allowed.<div class="spacer">
+</div>
+Example numbers would be:<div class="spacer">
+</div>
+<pre style="margin-left: 5.00ex;" class="lit display">
+128 
+-1.04 
+2e32 
+-18E-20</pre>
+</div>
+<div class="subsection">
+<h2 id="x537472696e6773">Strings</h2> A <i class="arg">string</i> is sequence of characters enclosed in quotation marks. All Unicode characters may be placed within the quotation marks except for the characters that must be escaped: quotation mark, backslash, and control characters.<div class="spacer">
+</div>
+Available two-character escape sequences are as follows:<div class="spacer">
+</div>
+<dl style="margin-top: 0.00em;margin-bottom: 0.00em;margin-left: 6.00ex;" class="list list-tag">
+<dt class="list-tag" style="margin-top: 0.00em;">
+<b class="flag">\\</b></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+Backslash character.</dd>
+<dt class="list-tag" style="margin-top: 0.00em;">
+<b class="flag">\/</b></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+Forward slash character.</dd>
+<dt class="list-tag" style="margin-top: 0.00em;">
+<b class="flag">\&quot;</b></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+Quotation mark.</dd>
+<dt class="list-tag" style="margin-top: 0.00em;">
+<b class="flag">\b</b></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+Bell character.</dd>
+<dt class="list-tag" style="margin-top: 0.00em;">
+<b class="flag">\f</b></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+Form feed character.</dd>
+<dt class="list-tag" style="margin-top: 0.00em;">
+<b class="flag">\n</b></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+Line feed character.</dd>
+<dt class="list-tag" style="margin-top: 0.00em;">
+<b class="flag">\t</b></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+Vertical tab character.</dd>
+<dt class="list-tag" style="margin-top: 0.00em;">
+<b class="flag">\u</b><i class="arg">num</i></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+Unicode character where <i class="arg">num</i> is a four hexadecimal digits that encode the character's code point.</dd>
+</dl>
+<div class="spacer">
+</div>
+Example strings would be:<div class="spacer">
+</div>
+<pre style="margin-left: 5.00ex;" class="lit display">
+&quot;Hello, world!&quot; 
+ 
+&quot;Please place all items \&quot;carefully\&quot; in bins.&quot; 
+ 
+&quot;\u03a6 is one of the letters of Greek alphabet.&quot;</pre>
+</div>
+</div>
+<div class="section">
+<h1 id="x454e47494e4520434f4e46494755524154494f4e">ENGINE CONFIGURATION</h1> The configuration file consist of an <i class="arg">array</i> of <i class="arg">objects</i>. Each object defines a single engine configuration. Required options for each engine configuration are:<dl style="margin-top: 0.00em;margin-bottom: 0.00em;" class="list list-tag">
+<dt class="list-tag" style="margin-top: 1.00em;">
+<b class="cmd">name</b> : <i class="arg">string</i></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+The name of the engine.</dd>
+<dt class="list-tag" style="margin-top: 1.00em;">
+<b class="cmd">command</b> : <i class="arg">string</i></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+The engine command.</dd>
+<dt class="list-tag" style="margin-top: 1.00em;">
+<b class="cmd">protocol</b> : <code class="none">&quot;uci&quot;</code> | <code class="none">&quot;xboard&quot;</code></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+The chess engine protocol used by this engine.</dd>
+</dl>
+<div class="spacer">
+</div>
+Other available options for an engine configuration are:<dl style="margin-top: 0.00em;margin-bottom: 0.00em;" class="list list-tag">
+<dt class="list-tag" style="margin-top: 1.00em;">
+<b class="cmd">workingDirectory</b> : <i class="arg">string</i></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+The working directory of the engine.</dd>
+<dt class="list-tag" style="margin-top: 1.00em;">
+<b class="cmd">initStrings</b> : <i class="arg">array</i> <code class="none">of</code> <i class="arg">string</i></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+Array of strings sent to the engine's standard input at startup.</dd>
+<dt class="list-tag" style="margin-top: 1.00em;">
+<b class="cmd">whitepov</b> : <b class="flag">true</b> | <b class="flag">false</b></dt>
+<dd class="list-tag" style="margin-left: 6.00ex;">
+When <b class="flag">true</b> invert the engine's scores when it plays black. The default is <b class="flag">false</b>.<div class="spacer">
+</div>
+This option should be used with engines that always report scores from white's perspective.</dd>
+</dl>
+</div>
+<div class="section">
+<h1 id="x4558414d504c4553">EXAMPLES</h1> A minimal engine configuration file for the Sloppy chess engine:<div class="spacer">
+</div>
+<pre style="margin-left: 5.00ex;" class="lit display">
+[ 
+  { 
+    &quot;name&quot;: &quot;Sloppy&quot;, 
+    &quot;command&quot;: &quot;sloppy&quot;, 
+    &quot;protocol&quot;: &quot;xboard&quot; 
+  } 
+]</pre>
+<div class="spacer">
+</div>
+Using the above engine configuration file with the <b class="flag">conf</b> command-line option:<div class="spacer">
+</div>
+<blockquote style="margin-top: 0.00em;margin-bottom: 0.00em;">
+<div class="display">
+<code class="lit">$ cutechess-cli -engine conf=Sloppy -engine conf=Sloppy -each tc=40/60 -rounds 10</code></div>
+</blockquote>
+</div>
+<div class="section">
+<h1 id="x53454520414c534f">SEE ALSO</h1> <a class="link-man">cutechess-cli(6)</a><div class="spacer">
+</div>
+<span class="ref"><span class="ref-title">The application/json Media Type for JavaScript Object Notation (JSON)</span>, <span class="ref-rep">RFC 4627</span>, <span class="ref-date">July 2006</span>.</span></div>
+<table class="foot">
+<tbody>
+<tr>
+<td class="foot-date">
+April 10, 2012</td>
+<td class="foot-os">
+OpenBSD 5.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
+
